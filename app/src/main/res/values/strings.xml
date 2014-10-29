@@ -3,6 +3,7 @@
 
     <string name="app_name">ViewPagerExample</string>
     <string name="hello_world">Hello world!</string>
+    <string name="water_drop">Water Drop</string>
     <string name="action_settings">Settings</string>
 
 </resources>
