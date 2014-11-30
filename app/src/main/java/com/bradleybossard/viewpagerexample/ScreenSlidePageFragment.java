@@ -2,11 +2,15 @@ package com.bradleybossard.viewpagerexample;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 
 /**
@@ -19,6 +23,8 @@ import android.widget.TextView;
  *
  */
 public class ScreenSlidePageFragment extends Fragment {
+    private static final String TAG = "ScreenSlidePageFragment";
+
     private static final String ARG_PAGENUM = "arg_pagenum";
 
     private int mPageNum;
@@ -60,6 +66,8 @@ public class ScreenSlidePageFragment extends Fragment {
         }
     }
 
+
+    // Set different text and background color for each page
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,6 +91,19 @@ public class ScreenSlidePageFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.ipsum_text)).setText(ipsumText);
         ScrollView scrollView = (ScrollView) rootView.findViewById(R.id.content);
         scrollView.setBackgroundColor(colorText);
+
+        // Get a list of ids in the raw folder.
+        // TODO(bradleybossard) : Write code to put x items on a page.
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Field[] fields = R.raw.class.getFields();
+        for(Field f : fields)
+            try {
+                Log.v(TAG, "f " + f.getName());
+                list.add(f.getInt(null));
+            } catch (IllegalArgumentException e) {
+            } catch (IllegalAccessException e) { }
+
+
         return rootView;
     }
 
