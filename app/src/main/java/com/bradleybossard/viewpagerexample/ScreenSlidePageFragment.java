@@ -6,6 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -96,14 +100,47 @@ public class ScreenSlidePageFragment extends Fragment {
         // TODO(bradleybossard) : Write code to put x items on a page.
         ArrayList<Integer> list = new ArrayList<Integer>();
         Field[] fields = R.raw.class.getFields();
+        /*
         for(Field f : fields)
             try {
-                Log.v(TAG, "f " + f.getName());
+                Log.v(TAG, "f " + f.getName() + "  " + f.getInt(null));
                 list.add(f.getInt(null));
             } catch (IllegalArgumentException e) {
             } catch (IllegalAccessException e) { }
+        */
 
+        Log.i(TAG, "Page no : " + mPageNum);
 
+        int numItemsPerPage = 10;
+        int minIndex = mPageNum *  numItemsPerPage;
+        if (minIndex > fields.length) {
+            return rootView;
+        }
+
+        int maxIndex = (mPageNum + 1) * numItemsPerPage > fields.length ? fields.length : (mPageNum + 1) * numItemsPerPage;
+
+        LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.button_container);
+        layout.setOrientation(LinearLayout.VERTICAL);  //Can also be done in xml by android:orientation="vertical"
+
+        // TODO(bbossard) : Add logic for calculating how many buttons get added per page.
+        for (int i = 0; i < 1; i++) {
+            LinearLayout row = new LinearLayout(layout.getContext());
+            row.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+
+            for(int count = minIndex; count < maxIndex; count++){
+                String soundName = fields[count].getName();
+                Log.i(TAG, "Raw Asset: " + soundName);
+
+                Button btnTag = new Button(layout.getContext());
+                btnTag.setText(soundName);
+
+                btnTag.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                btnTag.setBackgroundColor(0xFFFFFFFF);
+                row.addView(btnTag);
+            }
+
+            layout.addView(row);
+        }
         return rootView;
     }
 

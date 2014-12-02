@@ -3,13 +3,21 @@
     android:id="@+id/content"
     android:background="#FF0000"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="fill_parent" >
 
-    <TextView style="?android:textAppearanceMedium"
-        android:id="@+id/ipsum_text"
-        android:padding="16dp"
-        android:lineSpacingMultiplier="1.2"
+    <LinearLayout
+        android:id="@+id/button_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lorem_ipsum"/>
+        android:layout_height="fill_parent"
+        >
+        <TextView style="?android:textAppearanceMedium"
+            android:id="@+id/ipsum_text"
+            android:padding="16dp"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lorem_ipsum"/>
+
+    </LinearLayout>
+
 </ScrollView>
