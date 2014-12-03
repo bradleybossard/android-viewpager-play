@@ -1,5 +1,6 @@
 package com.bradleybossard.viewpagerexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,12 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+
+//import android.media.AudioAttributes.Builder;
+
+//import android.media.SoundPool.Builder;
 
 
 /**
@@ -79,17 +83,17 @@ public class ScreenSlidePageFragment extends Fragment {
                 R.layout.fragment_screen_slide_page, container, false);
 
         String ipsumText = "";
-        int colorText = 0xFF000000;
+        int colorText = 0xFFFFFFFF;
 
         if (mPageNum == 0) {
             ipsumText = getText(R.string.lorem_ipsum1).toString();
-            colorText = 0xFFFF0000;
+            //colorText = 0xFFFF0000;
         } else if (mPageNum == 1) {
             ipsumText = getText(R.string.lorem_ipsum2).toString();
-            colorText = 0xFF00FF00;
+            //colorText = 0xFF00FF00;
         } else if (mPageNum == 2) {
             ipsumText = getText(R.string.lorem_ipsum3).toString();
-            colorText = 0xFF0000FF;
+            //colorText = 0xFF0000FF;
         }
 
         ((TextView) rootView.findViewById(R.id.ipsum_text)).setText(ipsumText);
@@ -100,14 +104,6 @@ public class ScreenSlidePageFragment extends Fragment {
         // TODO(bradleybossard) : Write code to put x items on a page.
         ArrayList<Integer> list = new ArrayList<Integer>();
         Field[] fields = R.raw.class.getFields();
-        /*
-        for(Field f : fields)
-            try {
-                Log.v(TAG, "f " + f.getName() + "  " + f.getInt(null));
-                list.add(f.getInt(null));
-            } catch (IllegalArgumentException e) {
-            } catch (IllegalAccessException e) { }
-        */
 
         Log.i(TAG, "Page no : " + mPageNum);
 
@@ -128,15 +124,28 @@ public class ScreenSlidePageFragment extends Fragment {
             row.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
             for(int count = minIndex; count < maxIndex; count++){
-                String soundName = fields[count].getName();
-                Log.i(TAG, "Raw Asset: " + soundName);
+                try {
+                    String soundName = fields[count].getName();
+                    final int resourceId = fields[count].getInt(null);
 
-                Button btnTag = new Button(layout.getContext());
-                btnTag.setText(soundName);
+                    final Button btnTag = new Button(layout.getContext());
+                    btnTag.setText(soundName);
 
-                btnTag.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                btnTag.setBackgroundColor(0xFFFFFFFF);
-                row.addView(btnTag);
+                    btnTag.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                    btnTag.setBackgroundColor(0xFFFFFFFF);
+                    row.addView(btnTag);
+
+                    btnTag.setOnClickListener(new View.OnClickListener(){
+                        public void onClick(View v) {
+                            Intent playSound = new Intent(getActivity(), SoundPlayerService.class);
+                            playSound.putExtra("soundid", resourceId);
+                            getActivity().startService(playSound);
+                        }
+                    });
+
+                } catch (IllegalArgumentException e) {
+                } catch (IllegalAccessException e) {
+                }
             }
 
             layout.addView(row);
