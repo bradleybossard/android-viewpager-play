@@ -3,6 +3,7 @@ package com.bradleybossard.viewpagerexample;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,7 +122,10 @@ public class ScreenSlidePageFragment extends Fragment {
         int numRows = (int)Math.ceil((double)numItemsPerPage / (double)numItemsPerRow);
         for (int rowCount = 0; rowCount < numRows; rowCount++) {
             LinearLayout row = new LinearLayout(layout.getContext());
-            row.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            layoutParams.weight = 1.0f;
+            layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+            row.setLayoutParams(layoutParams);
 
            for (int column = 0; column < numItemsPerRow; column++) {
                 try {
@@ -131,8 +135,10 @@ public class ScreenSlidePageFragment extends Fragment {
                     final Button btnTag = new Button(layout.getContext());
                     btnTag.setText(soundName);
 
-                    btnTag.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+                    LayoutParams buttonParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    btnTag.setLayoutParams(buttonParams);
                     btnTag.setBackgroundColor(0xFFFFFFFF);
+                    btnTag.setBackgroundResource(R.drawable.button_style);
                     row.addView(btnTag);
 
                     btnTag.setOnClickListener(new View.OnClickListener(){
