@@ -5,8 +5,8 @@ Implementing an example soundboard app that uses the Android ViewPager Layout Ma
 
 Demos
 -----
-[Animated Gif (no sound)](./demos/simple_soundboard_demo.gif)
-[Current mp4 video](./demos/simple_soundboard_demo.mp4)
+![Animated Gif (no sound)](./demos/simple_soundboard_demo.gif)<br>
+![Current mp4 video](./demos/simple_soundboard_demo.mp4)<br>
 
 Links
 -----
