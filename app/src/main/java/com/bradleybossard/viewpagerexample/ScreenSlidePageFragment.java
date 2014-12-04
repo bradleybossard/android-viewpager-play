@@ -136,6 +136,7 @@ public class ScreenSlidePageFragment extends Fragment {
                     btnTag.setText(soundName);
 
                     LayoutParams buttonParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    buttonParams.setMargins(10, 10, 10, 10);
                     btnTag.setLayoutParams(buttonParams);
                     btnTag.setBackgroundColor(0xFFFFFFFF);
                     btnTag.setBackgroundResource(R.drawable.button_style);
