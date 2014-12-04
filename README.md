@@ -1,7 +1,12 @@
 android-viewpager-play
 ======================
 
-Implementing an example app that uses the Android ViewPager Layout Manager
+Implementing an example soundboard app that uses the Android ViewPager Layout Manager
+
+Demos
+-----
+[Animated Gif (no sound)](./demos/simple_soundboard_demo.gif)
+[Current mp4 video](./demos/simple_soundboard_demo.mp4)
 
 Links
 -----
