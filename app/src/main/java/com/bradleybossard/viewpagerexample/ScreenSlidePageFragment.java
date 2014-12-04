@@ -83,7 +83,7 @@ public class ScreenSlidePageFragment extends Fragment {
 
 
         // Get a list of ids in the raw folder.
-        // TODO(bradleybossard) : Write code to put x items on a page.
+        // TODO(bradleybossard) : Move logic that gets the list of raw resources in an object.
         ArrayList<Integer> list = new ArrayList<Integer>();
         Field[] fields = R.raw.class.getFields();
 
@@ -117,16 +117,16 @@ public class ScreenSlidePageFragment extends Fragment {
         LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.button_container);
         layout.setOrientation(LinearLayout.VERTICAL);  //Can also be done in xml by android:orientation="vertical"
 
-        // TODO(bbossard) : Add logic for calculating how many buttons get added per page.
-        int numRows = Math.ceil(numItemsPerPage / numItemsPerRow);
-        for (int i = 0; i < 1; i++) {
+        int soundIndex = numItemsPerPage * mPageNum;
+        int numRows = (int)Math.ceil((double)numItemsPerPage / (double)numItemsPerRow);
+        for (int rowCount = 0; rowCount < numRows; rowCount++) {
             LinearLayout row = new LinearLayout(layout.getContext());
             row.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
-            for(int count = minIndex; count < maxIndex; count++){
+           for (int column = 0; column < numItemsPerRow; column++) {
                 try {
-                    String soundName = fields[count].getName();
-                    final int resourceId = fields[count].getInt(null);
+                    String soundName = fields[soundIndex].getName();
+                    final int resourceId = fields[soundIndex].getInt(null);
 
                     final Button btnTag = new Button(layout.getContext());
                     btnTag.setText(soundName);
@@ -142,6 +142,10 @@ public class ScreenSlidePageFragment extends Fragment {
                             getActivity().startService(playSound);
                         }
                     });
+                    soundIndex++;
+                    if (soundIndex >= maxIndex) {
+                        break;
+                    }
 
                 } catch (IllegalArgumentException e) {
                 } catch (IllegalAccessException e) {
