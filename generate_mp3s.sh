@@ -1,4 +1,4 @@
-for i in {1..100}; do 
+for i in {0..100}; do 
   leading_zeros=`printf %03d $i`
   say -o "sound_"$leading_zeros".aiff" "Test Sound $i"
 done

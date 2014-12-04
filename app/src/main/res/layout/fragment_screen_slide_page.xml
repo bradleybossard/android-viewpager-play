@@ -1,7 +1,6 @@
 <!-- fragment_screen_slide_page.xml -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/content"
-    android:background="#FF0000"
     android:layout_width="match_parent"
     android:layout_height="fill_parent" >
 
@@ -11,12 +10,12 @@
         android:layout_height="fill_parent"
         >
         <TextView style="?android:textAppearanceMedium"
-            android:id="@+id/ipsum_text"
+            android:id="@+id/page_title_text"
             android:padding="16dp"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lorem_ipsum"/>
+            android:layout_height="wrap_content"/>
+
 
     </LinearLayout>
 

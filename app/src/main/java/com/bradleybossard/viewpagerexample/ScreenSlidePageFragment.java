@@ -3,7 +3,6 @@ package com.bradleybossard.viewpagerexample;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,32 +81,14 @@ public class ScreenSlidePageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_screen_slide_page, container, false);
 
-        String ipsumText = "";
-        int colorText = 0xFFFFFFFF;
-
-        if (mPageNum == 0) {
-            ipsumText = getText(R.string.lorem_ipsum1).toString();
-            //colorText = 0xFFFF0000;
-        } else if (mPageNum == 1) {
-            ipsumText = getText(R.string.lorem_ipsum2).toString();
-            //colorText = 0xFF00FF00;
-        } else if (mPageNum == 2) {
-            ipsumText = getText(R.string.lorem_ipsum3).toString();
-            //colorText = 0xFF0000FF;
-        }
-
-        ((TextView) rootView.findViewById(R.id.ipsum_text)).setText(ipsumText);
-        ScrollView scrollView = (ScrollView) rootView.findViewById(R.id.content);
-        scrollView.setBackgroundColor(colorText);
 
         // Get a list of ids in the raw folder.
         // TODO(bradleybossard) : Write code to put x items on a page.
         ArrayList<Integer> list = new ArrayList<Integer>();
         Field[] fields = R.raw.class.getFields();
 
-        Log.i(TAG, "Page no : " + mPageNum);
-
         int numItemsPerPage = 10;
+        int numItemsPerRow = 3;
         int minIndex = mPageNum *  numItemsPerPage;
         if (minIndex > fields.length) {
             return rootView;
@@ -115,10 +96,29 @@ public class ScreenSlidePageFragment extends Fragment {
 
         int maxIndex = (mPageNum + 1) * numItemsPerPage > fields.length ? fields.length : (mPageNum + 1) * numItemsPerPage;
 
+        String pageTitleText = "Sounds " + minIndex + " - " + (maxIndex - 1);
+        int colorText = 0xFFFFFFFF;
+
+/*
+        //TODO(bbossard) : Here is where you might do some customization for each page.
+        if (mPageNum == 0) {
+            pageTitleText = "Farm Sounds";
+            colorText = 0xFFFF0000;
+        } else if (mPageNum == 1) {
+            pageTitleText = "War Sounds";
+            colorText = 0xFF00FF00;
+        }
+*/
+
+        ((TextView) rootView.findViewById(R.id.page_title_text)).setText(pageTitleText);
+        ScrollView scrollView = (ScrollView) rootView.findViewById(R.id.content);
+        scrollView.setBackgroundColor(colorText);
+
         LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.button_container);
         layout.setOrientation(LinearLayout.VERTICAL);  //Can also be done in xml by android:orientation="vertical"
 
         // TODO(bbossard) : Add logic for calculating how many buttons get added per page.
+        int numRows = Math.ceil(numItemsPerPage / numItemsPerRow);
         for (int i = 0; i < 1; i++) {
             LinearLayout row = new LinearLayout(layout.getContext());
             row.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
