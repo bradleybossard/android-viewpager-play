@@ -2,8 +2,10 @@ package com.bradleybossard.viewpagerexample;
 
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,17 +132,17 @@ public class ScreenSlidePageFragment extends Fragment {
 
            for (int column = 0; column < numItemsPerRow; column++) {
                 try {
-                    /*
-                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-                    mmr.setDataSource(filePath);
-
-                    String albumName =
-                            mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
-                    */
-
-
-                    String soundName = fields[soundIndex].getName();
                     final int resourceId = fields[soundIndex].getInt(null);
+
+                    final String uriPath="android.resource://" + getActivity().getPackageName()+"/raw/" + resourceId;
+                    final Uri uri = Uri.parse(uriPath);
+
+                    MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                    mmr.setDataSource(getActivity(), uri);
+
+                    String title =
+                            mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+                    String soundName = title;
 
                     final Button btnTag = new Button(layout.getContext());
                     btnTag.setText(soundName);
